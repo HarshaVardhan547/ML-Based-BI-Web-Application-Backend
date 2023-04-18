@@ -1,0 +1,19 @@
+{
+    "builds": [
+      {
+        "src": "app1.py",
+        "use": "@vercel/python",
+        "config": {
+          "python": "3.9.x",
+          "requirements": "requirements.txt"
+        }
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "app1.py"
+      }
+    ]
+  }
+  
