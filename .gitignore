@@ -1,0 +1,10 @@
+*.json
+*.env
+*/__pycache__/*
+.idea/*
+*/.vscode/*
+*/.pytest_cache/*
+*/.coverage/*
+*/.coverage.*
+*/.cove
+/.streamlit/
