@@ -13,7 +13,7 @@ def initialize_firestore():
     bundle_dir = getattr(sys, '_MEIPASS', os.path.abspath(os.path.dirname(__file__)))
     path_to_dat = os.path.abspath(os.path.join(bundle_dir, cred_path))
     # print("divi test 2", path_to_dat)
-    cred = credentials.Certificate(path_to_dat)
+    cred = credentials.Certificate("path/to/serviceAccountKey.json")
     firebase_admin.initialize_app(cred)
 
 
