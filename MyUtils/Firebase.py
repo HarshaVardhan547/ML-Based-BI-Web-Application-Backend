@@ -8,13 +8,10 @@ from firebase_admin import credentials, firestore, storage
 
 
 def initialize_firestore():
-    load_dotenv()
-    cred_path = os.getenv('FIREBASE_PATH')
-    bundle_dir = getattr(sys, '_MEIPASS', os.path.abspath(os.path.dirname(__file__)))
-    path_to_dat = os.path.abspath(os.path.join(bundle_dir, cred_path))
-    # print("divi test 2", path_to_dat)
-    cred = credentials.Certificate(path_to_dat)
-    firebase_admin.initialize_app(cred)
+    cred = credentials.ApplicationDefault()
+    firebase_admin.initialize_app(cred, {
+        'projectId': os.environ['FIREBASE_PROJECT_ID'],
+    })
 
 
 def get_firestore_files(search_file_name):
