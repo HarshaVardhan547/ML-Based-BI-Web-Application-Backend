@@ -6,13 +6,21 @@ import firebase_admin
 from dotenv import load_dotenv
 from firebase_admin import credentials, firestore, storage
 
+
 def initialize_firestore():
-    cred = credentials.Certificate({
-        "project_id": os.environ.get("FIREBASE_PROJECT_ID"),
-        "private_key": os.environ.get("FIREBASE_PRIVATE_KEY").replace("\\n", "\n"),
-        "client_email": os.environ.get("FIREBASE_CLIENT_EMAIL"),
-    })
-    firebase_admin.initialize_app(cred)
+    try:
+        cred = credentials.Certificate({
+            "type": os.environ.get("FIREBASE_TYPE"),
+            "project_id": os.environ.get("FIREBASE_PROJECT_ID"),
+            "private_key": os.environ.get("FIREBASE_PRIVATE_KEY").replace("\\n", "\n"),
+            "client_email": os.environ.get("FIREBASE_CLIENT_EMAIL"),
+        })
+        firebase_admin.initialize_app(cred)
+    except ValueError as e:
+        print("Error: Invalid service account certificate.")
+        print(e)
+        sys.exit(1)
+
 
 def get_firestore_files(search_file_name):
     try:
@@ -26,6 +34,7 @@ def get_firestore_files(search_file_name):
         limit(10). \
         stream()
     return docs
+
 
 def upload_file_to_firestore(file):
     try:
@@ -52,12 +61,3 @@ def upload_file_to_firestore(file):
         print(e)
         traceback.print_exc()
         return None
-
-if __name__ == '__main__':
-    load_dotenv() # load environment variables from .env file
-    cred = credentials.Certificate({
-        "project_id": os.environ.get("FIREBASE_PROJECT_ID"),
-        "private_key": os.environ.get("FIREBASE_PRIVATE_KEY").replace("\\n", "\n"),
-        "client_email": os.environ.get("FIREBASE_CLIENT_EMAIL"),
-    })
-    firebase_admin.initialize_app(cred)
